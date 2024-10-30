@@ -8,11 +8,12 @@
     <title>Document</title>
 </head>
 <body>
-<form action="/admin/articles/actions/update.php" method="post">
-    <label for="moder">Модерировано</label>
-    <input type="hidden" name="id" value="<?=$_GET["id"] ?? ''?>">
-    <input type="checkbox" name="moder" id="moder">
-    <input type="submit" value="Сохранить">
+<h1>Авторизация</h1>
+<form action="/auth/login.php" method="post">
+    <input type="text" name="login" placeholder="Логин">
+    <input type="password" name="password" placeholder="Пароль">
+    <input type="submit" value="Войти">
+    <h3><a href="/register.php">Регистрация</a></h3>
 </form>
 </body>
 </html>

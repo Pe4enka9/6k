@@ -16,12 +16,13 @@ $articles = $pdo->query("SELECT * FROM articles")->fetchAll(PDO::FETCH_ASSOC);
 <body>
 <table>
     <tr>
-        <td>#</td>
+        <td>№</td>
         <td>name</td>
         <td>text</td>
         <td>created_at</td>
         <td>is_moderated</td>
         <td>categories_id</td>
+        <td>user_id</td>
     </tr>
     <?php foreach ($articles as $article): ?>
         <tr>
@@ -31,6 +32,8 @@ $articles = $pdo->query("SELECT * FROM articles")->fetchAll(PDO::FETCH_ASSOC);
             <td><?=$article['created_at'] ?></td>
             <td><?=$article['is_moderated'] ?></td>
             <td><?=$article['categories_id'] ?></td>
+            <td><?=$article['user_id']?></td>
+            <td><a href="/admin/articles/edit.php?id=<?= $article['id'] ?>">Изменить</a></td>
         </tr>
     <?php endforeach; ?>
 </table>
