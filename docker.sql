@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: database:3306
--- Время создания: Окт 30 2024 г., 08:04
+-- Время создания: Окт 31 2024 г., 08:03
 -- Версия сервера: 5.7.44
 -- Версия PHP: 8.2.10
 
@@ -42,7 +42,8 @@ CREATE TABLE `articles` (
 --
 
 INSERT INTO `articles` (`id`, `name`, `text`, `created_at`, `is_moderated`, `categories_id`, `user_id`) VALUES
-(2, 'vika', 'vika', '2024-10-30 07:08:36', 1, 2, 22);
+(2, 'vika', 'vika', '2024-10-31 07:27:20', 0, 3, 22),
+(5, 'hyth', 'dyjdth', '2024-10-31 07:50:00', 1, 4, 22);
 
 -- --------------------------------------------------------
 
@@ -60,7 +61,9 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`) VALUES
-(2, 'rtsju');
+(2, 'rtsju'),
+(3, 'oghg'),
+(4, 'qhkgdt');
 
 -- --------------------------------------------------------
 
@@ -114,13 +117,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `articles`
 --
 ALTER TABLE `articles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
