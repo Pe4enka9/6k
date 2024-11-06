@@ -1,7 +1,26 @@
 <?php
-/** @var PDO $pdo */
+
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: /login.php');
+    exit();
+}
+
+/**@var PDO $pdo */
 $pdo = require $_SERVER['DOCUMENT_ROOT'] . '/db.php';
-$articles = $pdo->query("SELECT * FROM articles")->fetchAll(PDO::FETCH_ASSOC);
+
+$is_admin = $pdo->query("SELECT * FROM users WHERE id = '{$_SESSION['user_id']}' and is_admin is true");
+if ($is_admin->rowCount() < 1) {
+    header('Location: /index.php');
+    exit();
+}
+
+$articles = $pdo->query("SELECT articles.*, categories.name AS category, users.login AS user
+FROM articles 
+JOIN categories ON articles.categories_id=categories.id
+JOIN users ON articles.user_id=users.id")->fetchAll();
 ?>
 
 <!doctype html>
@@ -13,16 +32,23 @@ $articles = $pdo->query("SELECT * FROM articles")->fetchAll(PDO::FETCH_ASSOC);
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>articles</title>
 </head>
+<style>
+    table, th, td {
+        padding: 5px;
+        border: 1px solid #000;
+        border-collapse: collapse;
+    }
+</style>
 <body>
 <table>
     <tr>
         <td>№</td>
-        <td>name</td>
-        <td>text</td>
-        <td>created_at</td>
-        <td>is_moderated</td>
-        <td>categories_id</td>
-        <td>user_id</td>
+        <td>Название</td>
+        <td>Текст</td>
+        <td>Дата опубликования</td>
+        <td>Модерация</td>
+        <td>Категория</td>
+        <td>Автор</td>
     </tr>
     <?php foreach ($articles as $article): ?>
         <tr>
@@ -30,9 +56,9 @@ $articles = $pdo->query("SELECT * FROM articles")->fetchAll(PDO::FETCH_ASSOC);
             <td><?= $article['name'] ?></td>
             <td><?=$article['text'] ?></td>
             <td><?=$article['created_at'] ?></td>
-            <td><?=$article['is_moderated'] ?></td>
-            <td><?=$article['categories_id'] ?></td>
-            <td><?=$article['user_id']?></td>
+            <td><?=$article['is_moderated'] ? 'Да' : 'Нет'?></td>
+            <td><?=$article['category'] ?></td>
+            <td><?=$article['user']?></td>
             <td><a href="/admin/articles/edit.php?id=<?= $article['id'] ?>">Изменить</a></td>
         </tr>
     <?php endforeach; ?>

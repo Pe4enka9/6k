@@ -1,11 +1,20 @@
 <?php
 
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: /login.php');
+    exit();
+}
+
 /**@var PDO $pdo */
 $pdo = require $_SERVER['DOCUMENT_ROOT'] . '/db.php';
 $articles = $pdo->query("SELECT articles.*, categories.name AS category, users.login AS user
 FROM articles 
 JOIN categories ON articles.categories_id=categories.id
-JOIN users ON articles.user_id=users.id")->fetchAll(PDO::FETCH_ASSOC);
+JOIN users ON articles.user_id=users.id 
+where articles.user_id = {$_SESSION['user_id']}")->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!doctype html>

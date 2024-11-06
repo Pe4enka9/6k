@@ -1,4 +1,12 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: /login.php');
+    exit();
+}
+
 /**@var PDO $pdo */
 $pdo = require $_SERVER['DOCUMENT_ROOT'] . '/db.php';
 $id = $_GET['id']??'';

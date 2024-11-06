@@ -1,6 +1,21 @@
 <?php
 /** @var PDO $pdo */
 $pdo = require $_SERVER['DOCUMENT_ROOT'] . '/db.php';
+
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: /login.php');
+    exit();
+}
+
+$is_admin = $pdo->query("SELECT * FROM users WHERE id = '{$_SESSION['user_id']}' and is_admin is true");
+if ($is_admin->rowCount() < 1) {
+    header('Location: /index.php');
+    exit();
+}
+
 $categoryId = $_GET['id'] ?? '';
 $category = $pdo->query("SELECT * FROM categories where id='$categoryId'")->fetch(PDO::FETCH_ASSOC);
 ?>

@@ -24,4 +24,3 @@ if (!isset($_SESSION['user_id'])) {
 <a href="/auth/logout.php">Выйти</a>
 </body>
 </html>
-
